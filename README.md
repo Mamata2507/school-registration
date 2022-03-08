@@ -175,7 +175,7 @@ $ docker ps
 
 Review container NAMES and STATUS should be Up:
 
-school-registration_api_service_1
+school-registration_api_service_1  and  
 school-registration_mysql_db_1
 
 ### 4. At this point, you should be able to open the app and see it running. 
