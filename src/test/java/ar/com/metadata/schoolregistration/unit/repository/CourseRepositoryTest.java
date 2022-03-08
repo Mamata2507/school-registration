@@ -61,9 +61,7 @@ public class CourseRepositoryTest {
         Course courseFound = courseRepository.findCourseByCourseName(NAME_COURSE);
         courseFound.setCourseName("Mathematics 4");
         courseRepository.save(courseFound);
-
         Course updatedCourse = courseRepository.findCourseByCourseName("Mathematics 4");
-
         assertThat(updatedCourse.getCourseName()).isEqualTo("Mathematics 4");
     }
 
@@ -72,11 +70,8 @@ public class CourseRepositoryTest {
     @Rollback(false)
     public void deleteCourse() {
         Course courseFound = courseRepository.findCourseByCourseName(NAME_COURSE);
-
         courseRepository.deleteById(courseFound.getCourseId());
-
         Course deletedCourse = courseRepository.findCourseByCourseName(NAME_COURSE);
-
         assertThat(deletedCourse).isNull();
 
     }

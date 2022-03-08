@@ -2,6 +2,15 @@
 
 School registration system
 
+## Technology stack
+
+• Java
+• Maven
+• Spring Boot
+• Docker (docker-compose)
+• JUnit
+• MySQL
+
 ## Requirement
 
 Design and implement simple school registration system
@@ -25,6 +34,7 @@ Provide the following REST API:
 
 ## Endpoints and payloads
 
+## CRUD Students
 
 ### Create Student
 curl --location --request POST 'http://localhost:8082/students' \
@@ -61,13 +71,7 @@ curl --location --request GET 'http://localhost:8082/students/23' \
 curl --location --request GET 'http://localhost:8082/students' \
 --data-raw ''
 
-### Get All Student by Course
-curl --location --request GET 'http://localhost:8082/courses/16/students' \
---data-raw ''
-
-### Get All Student without Course
-curl --location --request GET 'http://localhost:8082/students/nocourses' \
---data-raw ''
+## CRUD Courses
 
 ### Create Course
 curl --location --request POST 'http://localhost:8082/courses' \
@@ -97,19 +101,83 @@ curl --location --request GET 'http://localhost:8082/courses/18' \
 curl --location --request GET 'http://localhost:8082/courses' \
 --data-raw ''
 
+## Filter
+
 ### Get All Course by Student
 curl --location --request GET 'http://localhost:8082/students/20/courses' \
+--data-raw ''
+
+### Get All Student by Course
+curl --location --request GET 'http://localhost:8082/courses/16/students' \
 --data-raw ''
 
 ### Get All Course without Student
 curl --location --request GET 'http://localhost:8082/courses/nostudents' \
 --data-raw ''
 
-### Enroll Student in Course
+### Get All Student without Course
+curl --location --request GET 'http://localhost:8082/students/nocourses' \
+--data-raw ''
+
+## API for students to register to courses
 curl --location --request PUT 'http://localhost:8082/courses/12/students/11' \
 --data-raw ''
 
 ## How to setup project
+
+### Compose file
+### 1. Review, the api has a docker-compose.yml, should look like this:
+
+version: "3.7"
+services:
+mysql_db:
+image: "mysql:8.0"
+restart: unless-stopped
+env_file: .env
+environment:
+- MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+- MYSQL_DATABASE=$MYSQLDB_DATABASE
+ports:
+- $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+volumes:
+- db:/var/lib/mysql
+api_service:
+depends_on:
+- mysql_db
+build: .
+restart: on-failure
+env_file: .env
+ports:
+- $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+environment:
+SPRING_APPLICATION_JSON: '{
+"spring.datasource.url"  : "jdbc:mysql://mysql_db:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?allowPublicKeyRetrieval=true&useSSL=false",
+"spring.datasource.username" : "$MYSQLDB_USER",
+"spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+"spring.datasource.driver-class-name" : "com.mysql.cj.jdbc.Driver",
+"spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+"spring.jpa.hibernate.ddl-auto" : "update"
+}'
+volumes:
+- .m2:/root/.m2
+stdin_open: true
+tty: true
+volumes:
+db:
+
+### Run the application stack
+### Start up the application stack using the docker-compose up command. 
+We’ll add the -d flag to run everything in the background.
+    $ docker-compose up -d
+
+### View list all the containers
+$ docker-compose up -d
+
+Review container NAMES and STATUS Up:
+school-registration_api_service_1
+school-registration_mysql_db_1
+
+### At this point, you should be able to open the app and see it running. 
 
 
 

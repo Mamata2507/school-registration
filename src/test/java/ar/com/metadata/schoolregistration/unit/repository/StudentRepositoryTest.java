@@ -62,9 +62,7 @@ public class StudentRepositoryTest {
         Student studentFound = studentRepository.findStudentByStudentName(NAME_STUDENT);
         studentFound.setStudentName("Claudio Torrez");
         studentRepository.save(studentFound);
-
         Student updatedStudent = studentRepository.findStudentByStudentName("Claudio Torrez");
-
         assertThat(updatedStudent.getStudentName()).isEqualTo("Claudio Torrez");
     }
 
@@ -73,11 +71,8 @@ public class StudentRepositoryTest {
     @Rollback(false)
     public void deleteStudent() {
         Student studentFound = studentRepository.findStudentByStudentName(NAME_STUDENT);
-
         studentRepository.deleteById(studentFound.getStudentId());
-
         Student deletedStudent = studentRepository.findStudentByStudentName(NAME_STUDENT);
-
         assertThat(deletedStudent).isNull();
 
     }
