@@ -171,9 +171,10 @@ We’ll add the -d flag to run everything in the background.
     $ docker-compose up -d
 
 ### 3. View list all the containers
-$ docker-compose up -d
+$ docker ps
 
-Review container NAMES and STATUS Up:
+Review container NAMES and STATUS should be Up:
+
 school-registration_api_service_1
 school-registration_mysql_db_1
 
