@@ -126,7 +126,7 @@ curl --location --request PUT 'http://localhost:8082/courses/12/students/11' \
 ## How to setup project
 
 ### Compose file
-### 1. Review, the api has a docker-compose.yml, should look like this:
+### 1. Review, api has a docker-compose.yml, should look like this:
 
 version: "3.7"
 services:
@@ -165,19 +165,19 @@ tty: true
 volumes:
 db:
 
-### Run the application stack
-### Start up the application stack using the docker-compose up command. 
+### 2. Run the application stack
+Start up the application stack using the docker-compose up command. 
 We’ll add the -d flag to run everything in the background.
     $ docker-compose up -d
 
-### View list all the containers
+### 3. View list all the containers
 $ docker-compose up -d
 
 Review container NAMES and STATUS Up:
 school-registration_api_service_1
 school-registration_mysql_db_1
 
-### At this point, you should be able to open the app and see it running. 
+### 4. At this point, you should be able to open the app and see it running. 
 
 
 
